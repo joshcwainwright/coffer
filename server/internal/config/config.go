@@ -7,7 +7,7 @@ type Config struct {
 }
 
 func Load() Config {
-	return Config{DBPath: env("DB_PATH", "./data/coffer.db")}
+	return Config{DBPath: env("COFFER_DB_PATH", "./data/coffer.db")}
 }
 
 func env(key, fallback string) string {
