@@ -1,4 +1,4 @@
-module github.com/joshcwainwright/net-worth/api
+module github.com/joshcwainwright/coffer/api
 
 go 1.26.5
 
