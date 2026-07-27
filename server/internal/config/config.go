@@ -1,19 +1,27 @@
 package config
 
-import "os"
-
 type Config struct {
-	DBPath string
+	DBPath        string
+	PlaidClientID string
+	PlaidSecret   Secret
+	PlaidEnv      PlaidEnv
+	MasterKey     MasterKey
 }
 
-func Load() Config {
-	return Config{DBPath: env("COFFER_DB_PATH", "./data/coffer.db")}
-}
+func Load() (Config, error) {
+	var l loader
 
-func env(key, fallback string) string {
-	if v := os.Getenv(key); v != "" {
-		return v
+	config := Config{
+		DBPath:        parsedOr(&l, "COFFER_DB_PATH", parseString, "./data/coffer.db"),
+		PlaidClientID: parsed(&l, "PLAID_CLIENT_ID", parseString),
+		PlaidSecret:   parsed(&l, "PLAID_SECRET", parseSecret),
+		PlaidEnv:      parsed(&l, "PLAID_ENV", parseEnv),
+		MasterKey:     parsed(&l, "COFFER_MASTER_KEY", parseMasterKey),
 	}
 
-	return fallback
+	if fail := l.fail(); fail != nil {
+		return Config{}, fail
+	}
+
+	return config, nil
 }

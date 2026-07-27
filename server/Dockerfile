@@ -2,6 +2,8 @@
 
 FROM --platform=$BUILDPLATFORM golang:1.26-alpine AS build
 
+ENV GOTOOLCHAIN=local
+
 WORKDIR /src
 
 COPY go.mod go.sum ./

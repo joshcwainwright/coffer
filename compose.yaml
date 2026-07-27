@@ -1,0 +1,12 @@
+services:
+  api:
+    build:
+      context: ./server
+    image: coffer:dev
+    env_file:
+      - ${HOME}/.config/coffer/.env
+    volumes:
+      - coffer-data:/data
+volumes:
+  coffer-data:
+    name: coffer-data

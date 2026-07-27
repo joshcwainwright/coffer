@@ -8,11 +8,14 @@ import (
 )
 
 func main() {
-	cfg := config.Load()
+	cfg, err := config.Load()
+	if err != nil {
+		log.Fatalf("failure loading config: %v", err)
+	}
 
 	st, err := store.Open(cfg.DBPath)
 	if err != nil {
-		log.Fatalf("open store: %v", err)
+		log.Fatalf("failure openening store: %v", err)
 	}
 	defer func() { _ = st.Close() }()
 
