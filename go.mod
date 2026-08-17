@@ -1,4 +1,4 @@
-module github.com/joshcwainwright/coffer/server
+module github.com/joshcwainwright/coffer
 
 go 1.26.5
 

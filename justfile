@@ -6,13 +6,13 @@ env_file := "$HOME/.config/coffer/.env"
 default:
     @just --list
 
-# Run the API natively against the production env file
+# Run natively against the production env file
 run: (_run env_file)
 
-# Run the API natively against the sandbox env file
+# Run natively against the sandbox env file
 run-sandbox: (_run (env_file + ".sandbox"))
 
-# Shared runner: source an env file, then run from server/ so ./data/coffer.db is stable
+# Shared runner: source an env file, then run from the repo root so ./data/coffer.db is stable
 _run file:
     #!/usr/bin/env bash
     set -euo pipefail
@@ -22,23 +22,23 @@ _run file:
         exit 1
     fi
     set -a && . "{{file}}" && set +a
-    cd server && exec go run ./cmd/api
+    exec go run ./cmd/coffer
 
 # Run the Go tests
 test:
-    cd server && go test ./...
+    go test ./...
 
 # Vet and compile-check without producing a binary
 check:
-    cd server && go vet ./... && go build ./...
+    go vet ./... && go build ./...
 
 # Tidy go.mod / go.sum
 tidy:
-    cd server && go mod tidy
+    go mod tidy
 
 # Build the Docker image for this machine's architecture
 build:
-    docker build -t {{image}}:dev ./server
+    docker build -t {{image}}:dev .
 
 # Run the built image against the local named volume
 run-image: build
@@ -46,10 +46,10 @@ run-image: build
 
 # Run the tests inside the build stage (Linux parity check)
 test-docker:
-    docker build --target build -t {{image}}:test ./server
+    docker build --target build -t {{image}}:test .
     docker run --rm -v coffer-gomod:/go/pkg/mod {{image}}:test go test ./...
 
 # Build and push a multi-arch release image, e.g. `just release v1`
 release version:
     docker buildx build --platform linux/amd64,linux/arm64 \
-      -t {{registry}}/{{image}}:{{version}} --push ./server
+      -t {{registry}}/{{image}}:{{version}} --push .

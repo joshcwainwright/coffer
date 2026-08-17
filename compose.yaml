@@ -1,7 +1,7 @@
 services:
-  api:
+  coffer:
     build:
-      context: ./server
+      context: .
     image: coffer:dev
     env_file:
       - ${HOME}/.config/coffer/.env
