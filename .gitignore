@@ -13,23 +13,13 @@ data/
 *.db-wal
 *.db-shm
 
-# ── Go (backend) ─────────────────────────────────────────
-/api/server            # compiled binaries (go build output)
-/api/mcp
+# ── Go ───────────────────────────────────────────────────
+/coffer                # compiled binaries (go build output)
+/mcp
 /bin/
 *.test                 # test binaries
 *.out                  # coverage/profile output
 coverage.*
-
-# ── Rust (TUI) ───────────────────────────────────────────
-tui/target/
-target/
-
-# ── Web (SvelteKit, once you add it) ─────────────────────
-node_modules/
-/web/build/
-/web/.svelte-kit/
-/web/dist/
 
 # ── OS / editor junk ─────────────────────────────────────
 .DS_Store

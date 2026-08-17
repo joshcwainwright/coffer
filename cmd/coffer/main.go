@@ -3,8 +3,8 @@ package main
 import (
 	"log"
 
-	"github.com/joshcwainwright/coffer/server/internal/config"
-	"github.com/joshcwainwright/coffer/server/internal/store"
+	"github.com/joshcwainwright/coffer/internal/config"
+	"github.com/joshcwainwright/coffer/internal/store"
 )
 
 func main() {
